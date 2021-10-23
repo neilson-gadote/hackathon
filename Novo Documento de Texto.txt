@@ -1,0 +1,20 @@
+import glob
+import os.path
+import pandas as pd
+
+#Pasta onde procura os arquivos exportados do howmanypeoplearearound
+folder_path = r'C:\Users\caiom\Desktop\Captura'
+
+#Extensão dos arquivos procurados
+file_type = '*txt'
+#Procura ultimo arquivo criado
+files = glob.glob(folder_path + file_type)
+max_file = max(files, key=os.path.getctime)
+
+#Printa o nome do arquivo
+print (max_file)
+df = pd.read_json(max_file)
+
+#Calcula quantidade de mac address encontrados e printa
+quantidade_pessoas = len(df.index)
+print (quantidade_pessoas)

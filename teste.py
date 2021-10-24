@@ -2,45 +2,47 @@ import random
 import base64
 import time
 
-def html_base(fundo, cont, img):
+def html_base(fundo, banner, cont): #cria a estrutura html da pagina
     return """<html>
                   <head>
                       <title>GF - Comendador Ermelino/L12</title>
-                      <meta http-equiv='refresh' content='8'>
+                      <meta http-equiv='refresh' content='5'>
                       <link rel='stylesheet' type='text/css' href='style.css'>
                   </head>
                   <body>
-                      <div class='container'><img src='data:image/jpeg;base64,""" + fundo + """'></div>
-                      <div class='centered'>Passageiros na plataforma:</br>"""+ cont +"""</div>
-                      <img src='data:image/jpeg;base64,""" + img + """'>
+                      <div class='back'><img src='data:image/jpeg;base64,""" + fundo + """'></div>
+                      <div class='banner'><img src='data:image/jpeg;base64,""" + banner + """'></div>
+                      <div class='content'>"""+ cont +"""%</div>
                   </body>
               </html>"""
 
-entrada = open("dados.txt").read()
-saida = open("sso.html", "w")
+entrada = open("dados.txt").read() #le o arquivo com os registros de celulares captados pelo roteador
+saida = open("sso.html", "w") #saida do arquivo html
 
-cont = entrada.count('"}')
-i=int(0)
+cont = entrada.count('"}') # faz a contagem dos aparelhos
+i=int(0) #variavel SOMENTE para o laco de repeticao de teste
 
-while i < 10:
-    cont = random.randint(0, 400)   
-    saida.truncate(0)
-    if cont < 100:
-        fundo = base64.b64encode(open('fundo.jpg', 'rb').read()).decode('utf-8')
-        img = base64.b64encode(open('1.jpg', 'rb').read()).decode('utf-8')
-        saida.write(html_base(fundo, str(cont), img))
-    elif cont >= 100 and cont < 200:
-        fundo = base64.b64encode(open('fundo.jpg', 'rb').read()).decode('utf-8')
-        img = base64.b64encode(open('3.jpg', 'rb').read()).decode('utf-8')
-        saida.write(html_base(fundo, str(cont), img))
-    elif cont >= 200 and cont < 300:
-        fundo = base64.b64encode(open('fundo.jpg', 'rb').read()).decode('utf-8')
-        img = base64.b64encode(open('3.jpg', 'rb').read()).decode('utf-8')
-        saida.write(html_base(fundo, str(cont), img))
+while i < 20:
+    cont = random.randint(0, 400) #numero randomico SOMENTE para teste
+    cont = (cont*100)/400 #descobre a porcentagem de ocupacao (400 seria o valor definido conforme o tamanho da estacao)
+    percent = int(cont)
+    saida.truncate(0) #limpa a pagina html
+    if cont < 25:
+        fundo = base64.b64encode(open('low.jpeg', 'rb').read()).decode('utf-8')
+        banner = base64.b64encode(open('banner.png', 'rb').read()).decode('utf-8')
+        saida.write(html_base(fundo, banner, str(percent)))
+    elif cont >= 25 and cont < 50:
+        fundo = base64.b64encode(open('medium.jpeg', 'rb').read()).decode('utf-8')
+        banner = base64.b64encode(open('banner.png', 'rb').read()).decode('utf-8')
+        saida.write(html_base(fundo, banner, str(percent)))
+    elif cont >= 50 and cont < 75:
+        fundo = base64.b64encode(open('high.jpeg', 'rb').read()).decode('utf-8')
+        banner = base64.b64encode(open('banner.png', 'rb').read()).decode('utf-8')
+        saida.write(html_base(fundo, banner, str(percent)))
     else:
-        fundo = base64.b64encode(open('fundo.jpg', 'rb').read()).decode('utf-8')
-        img = base64.b64encode(open('2.jpg', 'rb').read()).decode('utf-8')
-        saida.write(html_base(fundo, str(cont), img))
+        fundo = base64.b64encode(open('intense.jpeg', 'rb').read()).decode('utf-8')
+        banner = base64.b64encode(open('banner.png', 'rb').read()).decode('utf-8')
+        saida.write(html_base(fundo, banner, str(percent)))
              
-    time.sleep(8)
+    time.sleep(5)
     i += 1

@@ -1,7 +1,14 @@
-.container {
+::-webkit-scrollbar {
+    display: none;
+}
+
+.back {
     position: relative;
-    text-align: center;
-    color:white;
+    max-width: 100%;
+    max-height: 100%;
+    height: auto;
+    width: auto;
+    
 }
 
 body{
@@ -16,13 +23,26 @@ body{
 }
 
 img{
-    width: 100%;
+    max-width: 100%;
+    max-height: 100%;
+    height: auto;
+    width: auto;
 }
 
-.centered{
+.banner{
+    position: fixed;
+    top: 0%;
+    left: 50%;
+    height: 50%;
+    width: 50%;
+}
+
+.content{
     position: absolute;
-    top: 8%;
+    top: 14%;
     left: 75%;
+    font-size: 60px;
+    color: white;
     text-align: center;
     transform: translate(-50%, -50%);
 }
